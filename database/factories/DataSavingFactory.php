@@ -3,30 +3,25 @@
 namespace Database\Factories;
 
 use App\Models\Contact;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\DB;
 
-/**
- * @extends Factory<Contact>
- */
-class ContactSavingFactory extends Factory
+class DataSavingFactory
 {
-    protected string $table;
+    protected object $model;
 
     public function save(array $data): void
     {
-        DB::table($this->table)->insert($data);
+        $this->model->create($data);
     }
 
-    public function databaseSaver(string $table): void
+    public function databaseSaver(object $model): void
     {
-        $this->table = $table;
+        $this->model = $model;
     }
 
     public function chooseAndSave($data, $type): void
     {
         match ($type) {
-            'table' => $this->databaseSaver($data),
+            'model' => $this->databaseSaver($data),
             'fields' => $this->save($data),
             default => throw new \InvalidArgumentException('Invalid saver type'),
         };

@@ -2,17 +2,16 @@
 
 namespace App\Services;
 
-use Database\Factories\ContactSavingFactory;
+use App\Models\Contact;
+use Database\Factories\DataSavingFactory;
 
 class ContactService
 {
-
-
     public static function store(array $attributes): void
     {
-        $factory = new ContactSavingFactory();
+        $factory = new DataSavingFactory();
 
-        $factory->chooseAndSave('contacts', 'table');
+        $factory->chooseAndSave(new Contact(), 'model');
 
         $factory->chooseAndSave($attributes, 'fields');
     }
